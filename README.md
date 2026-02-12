@@ -1,7 +1,5 @@
 🔷 README – Veritas Execution Engine
 
-Copiază tot ce este între liniile de mai jos în README.md.
-
 # Veritas Execution Engine
 
 Deterministic execution integrity engine with cryptographic audit chain and replay verification.
