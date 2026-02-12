@@ -1,131 +1,251 @@
-# SACO – Deterministic Execution Ledger Engine
+🔷 README – Veritas Execution Engine
 
-SACO is a deterministic execution engine with cryptographic audit chaining.
+Copiază tot ce este între liniile de mai jos în README.md.
 
-It is designed to provide:
+# Veritas Execution Engine
 
-- Deterministic state execution
-- Hash-verified results
-- Snapshot reproducibility
-- Tamper-proof execution ledger
-- Enterprise-grade audit traceability
+Deterministic execution integrity engine with cryptographic audit chain and replay verification.
 
 ---
 
-## 🚀 Core Concept
+## Overview
 
-Every execution in SACO produces:
+Veritas is a deterministic execution engine designed for environments where **traceability, reproducibility, and cryptographic integrity** are mandatory.
+
+Given the same:
+
+- Input
+- World snapshot
+- Engine version
+
+The system will always produce:
+
+- The exact same result
+- The exact same execution hash
+
+Every execution is:
+
+- Deterministic
+- Cryptographically verifiable
+- Linked in a tamper-evident hash chain
+- Fully replayable
+
+This project explores enterprise-grade execution integrity beyond traditional API logic.
+
+---
+
+## Core Principles
+
+### 1. Determinism
+
+Same input + same world state → identical result.
+
+No randomness.  
+No hidden timestamps.  
+No side-effects.
+
+---
+
+### 2. Canonicalization
+
+All data structures are normalized before hashing.
+
+This ensures structural consistency independent of field ordering.
+
+---
+
+### 3. Cryptographic Integrity
+
+Each execution generates:
 
 - input_hash
 - world_hash
 - result_hash
 - execution_hash
-- previous_execution_hash (chain link)
 
-All executions are stored in an append-only ledger and can be fully verified.
+The execution hash is computed from:
 
-This makes SACO:
 
-• Deterministic  
-• Reproducible  
-• Auditable  
-• Tamper-evident  
+
+previous_execution_hash +
+input_hash +
+world_hash +
+result_hash +
+engine_version +
+schema_version
+
 
 ---
 
-## 🧠 Architecture Overview
+### 4. Hash-Chained Ledger
+
+Each execution links to the previous one via:
 
 
-Execution flow:
 
-1. Canonicalize input
-2. Hash input/world/result
-3. Build execution fingerprint
-4. Generate execution_hash
-5. Append to ledger
-6. Chain to previous execution
+previous_execution_hash
 
----
 
-## 🔐 Integrity Model
-
-Each block contains:
-
-- engine_version
-- schema_version
-- previous_execution_hash
-- input_hash
-- world_hash
-- result_hash
-- execution_hash
-
-Verification:
-
-- Recompute hashes
-- Recompute execution_hash
-- Verify hash chain continuity
-
-If any value is altered → chain breaks.
+This creates a tamper-evident chain similar to a lightweight integrity ledger.
 
 ---
 
-## 🛠 Endpoints
+### 5. Full Chain Verification
 
-### Health Check
-GET /health
+The system supports full historical verification via:
 
-### Test Hash
-GET /test-hash
 
-### Execute Test
-GET /execute-test
 
-### Verify Full Ledger
 GET /verify-chain
 
----
 
-## 📊 Current Status
+This endpoint:
 
-✔ Deterministic Engine  
-✔ Cryptographic Hashing  
-✔ Hash Chaining  
-✔ Ledger Verification  
-✔ PostgreSQL Persistence  
-
-Planned:
-
-- Replay mode
-- Snapshot registry
-- Enterprise RBAC
-- ERP connector layer
-- Risk propagation engine
+- Recomputes all hashes
+- Validates data integrity
+- Verifies chain linkage
+- Detects tampering
 
 ---
 
-## 🧭 Vision
+## Architecture
 
-SACO is evolving toward an enterprise-grade
-Execution Integrity Engine for:
 
-- Operational systems
-- ERP validation
-- Supply chain audit
-- Decision reproducibility
-- Strategic simulation
+
+Client
+↓
+Execution Pipeline
+↓
+Canonicalization
+↓
+SHA256 Hashing
+↓
+Execution Hash Composition
+↓
+PostgreSQL Ledger Storage
+↓
+Verification Layer
+
+
+Core modules:
+
+- `canonicalizer.py`
+- `hasher.py`
+- `engine.py`
+- `db.py`
+- `main.py`
 
 ---
 
-## ⚙️ Tech Stack
+## Endpoints
 
-- Python
+### Health Check
+
+
+
+GET /health
+
+
+---
+
+### Test Deterministic Hash
+
+
+
+GET /test-hash
+
+
+---
+
+### Execute Deterministic Pipeline
+
+
+
+GET /execute-test
+
+
+Returns:
+
+- Execution hashes
+- Result
+- Execution ID
+
+---
+
+### Verify Full Chain
+
+
+
+GET /verify-chain
+
+
+Returns:
+
+- ok: true/false
+- verified_blocks count
+- Integrity diagnostics
+
+---
+
+## Technology Stack
+
+- Python 3.13
 - FastAPI
 - PostgreSQL
-- SHA256 hashing
-- Deterministic canonicalization
+- SHA256 cryptographic hashing
+- Deterministic JSON canonicalization
 
 ---
 
-## 📜 License
+## Current Status
 
-Private prototype. Not for production use.
+Core deterministic engine: Stable  
+Ledger chaining: Implemented  
+Chain verification: Implemented  
+Enterprise hardening: In progress  
+
+---
+
+## Roadmap
+
+- Append-only enforcement at DB level
+- Snapshot registry
+- Replay execution by hash
+- RBAC layer
+- Multi-tenant support
+- ERP connector abstraction
+- mTLS integration
+
+---
+
+## Use Cases
+
+- Enterprise decision logging
+- Regulated environments
+- ERP execution integrity layer
+- Audit-grade simulation engines
+- Deterministic financial or operational pipelines
+
+---
+
+## Author
+
+Designed and implemented by:
+
+Mark Szakacs  
+Backend Engineer – Deterministic Systems & Execution Integrity
+
+---
+
+## Vision
+
+Software should not only compute.
+
+It should be:
+
+- Verifiable
+- Reproducible
+- Defensible
+- Mathematically consistent
+
+Veritas is a step toward execution systems that can withstand audit, litigation, and enterprise scrutiny.
